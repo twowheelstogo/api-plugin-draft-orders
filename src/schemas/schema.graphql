@@ -1,0 +1,82 @@
+"Draft order parameters"
+type DraftOrder {
+    "The draft order ID"
+    _id: ID!
+
+    "The linked cart ID"
+    cartId: String
+
+    "The linked cart"
+    cart: Cart
+
+    "The date and time at which draft order was created"
+    createdAt: DateTime!
+
+    "anonymousCartToken"
+    cartToken: ID
+
+    "accountId"
+    accountId: ID
+
+    "Account linked to the draft order"
+    account: Account
+
+    "shop id for the draft order"
+    shopId: ID!
+}
+
+"input for draft orders"
+input DraftOrderInput {
+    "The draft order ID"
+    _id: ID
+
+    "The cart id"
+    cartId: String
+
+    "anonymousCartToken"
+    cartToken: String
+
+    "accountId"
+    accountId: ID
+}
+
+"input for draft order cart"
+input createDraftOrderCartInput {
+    "Input to create cart"
+    createCartInput: createCartInput!
+
+    "accountId"
+    accountId: ID
+
+    "An optional string identifying the mutation call, which will be returned in the response payload"
+    clientMutationId: String
+
+    "shop id for the draft order"
+    shopId: ID!
+}
+
+type createDraftOrderPayload {
+    draftOrder: DraftOrder
+}
+
+input PlaceDraftOrderInput {
+    "input for draft order"
+    draftOrder: DraftOrderInput!
+
+    "An optional string identifying the mutation call, which will be returned in the response payload"
+    clientMutationId: String
+
+    "shop id for the draft order"
+    shopId: ID!
+}
+
+type PlaceDraftOrderPayload {
+    draftOrder: DraftOrder
+}
+
+extend type Mutation {
+    "Mutation to place draft order"
+    placeDraftOrder(
+        input: PlaceDraftOrderInput!
+    ) : PlaceDraftOrderPayload!
+}
