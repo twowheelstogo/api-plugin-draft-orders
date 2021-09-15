@@ -1,4 +1,7 @@
 import pkg from "../package.json";
+import mutations from "./mutations/index.js";
+import schemas from "./schemas/index.js";
+import resolvers from "./resolvers/index.js";
 
 /**
  * @summary Import and call this function to add this plugin to your API.
@@ -7,8 +10,18 @@ import pkg from "../package.json";
  */
 export default async function register(app) {
   await app.registerPlugin({
-    label: "Plugin Example",
-    name: "plugin-example",
-    version: pkg.version
+    label: "Draft Orders",
+    name: "plugin-draft-orders",
+    version: pkg.version,
+    collections: {
+      DraftOrders: {
+        name: "DraftOrders"
+      }
+    },
+    mutations,
+    graphQL: {
+      schemas,
+      resolvers
+    }
   });
 }

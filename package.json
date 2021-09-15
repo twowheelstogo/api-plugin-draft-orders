@@ -1,5 +1,5 @@
 {
-  "name": "@reactioncommerce/api-plugin-example",
+  "name": "api-plugin-draft-orders",
   "description": "Boilerplate Example plugin for the Reaction API",
   "version": "0.0.0-development",
   "main": "index.js",
