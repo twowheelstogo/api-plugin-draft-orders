@@ -17,10 +17,15 @@ export default async function placeDraftOrder(context, input) {
 
     const { draftOrder, shopId } = input;
 
+    console.log("input", input)
+
+    const date = new Date();
+
     const draftOrderInput = {
         ...draftOrder,
         _id: Random.id(),
-        shopId
+        shopId,
+        createdAt: date
     };
 
     await DraftOrders.insertOne(draftOrderInput);

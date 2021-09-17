@@ -6,9 +6,6 @@ type DraftOrder {
     "The linked cart ID"
     cartId: String
 
-    "The linked cart"
-    cart: Cart
-
     "The date and time at which draft order was created"
     createdAt: DateTime!
 
@@ -17,9 +14,6 @@ type DraftOrder {
 
     "accountId"
     accountId: ID
-
-    "Account linked to the draft order"
-    account: Account
 
     "shop id for the draft order"
     shopId: ID!
@@ -41,9 +35,9 @@ input DraftOrderInput {
 }
 
 "input for draft order cart"
-input createDraftOrderCartInput {
+input CreateDraftOrderCartInput {
     "Input to create cart"
-    createCartInput: createCartInput!
+    createCartInput: CreateCartInput!
 
     "accountId"
     accountId: ID
@@ -53,9 +47,12 @@ input createDraftOrderCartInput {
 
     "shop id for the draft order"
     shopId: ID!
+
+    "draft order id"
+    draftOrderId: ID!
 }
 
-type createDraftOrderPayload {
+type CreateDraftOrderCartPayload {
     draftOrder: DraftOrder
 }
 
@@ -74,9 +71,47 @@ type PlaceDraftOrderPayload {
     draftOrder: DraftOrder
 }
 
+input AddDraftOrderAccountInput {
+    "account id for the order"
+    accountId: ID
+
+    "cart id related with the order"
+    cartId: ID
+
+    "cart token if the cart is anonymous"
+    cartToken: String
+
+    "shop id where the order comes from"
+    shopId: ID!
+
+    "draft order id"
+    draftOrderId: ID!
+}
+
+type AddDraftOrderAccountPayload {
+    draftOrder: DraftOrder
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
         input: PlaceDraftOrderInput!
     ) : PlaceDraftOrderPayload!
+
+    "Mutation to create draft order cart"
+    createDraftOrderCart(
+        input: CreateDraftOrderCartInput!
+    ) : CreateDraftOrderCartPayload!
+
+    "Mutration to add account into the draft order"
+    addDraftOrderAccount(
+        input: AddDraftOrderAccountInput!
+    ): AddDraftOrderAccountPayload!
+}
+
+extend type Query {
+    "Gets a single draft order"
+    draftOrder (
+        draftOrderId: String!
+    ) : DraftOrder!
 }

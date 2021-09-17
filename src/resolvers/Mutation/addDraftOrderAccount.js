@@ -1,4 +1,4 @@
-import { decodeAccountOpaqueId, decodeCartOpaqueId, decodeShopOpaqueId } from "../../xforms/id.js";
+import { decodeAccountOpaqueId, decodeCartOpaqueId, decodeShopOpaqueId, decodeDraftOrderOpaqueId } from "../../xforms/id.js";
 
 /**
  * @name Mutation/addDraftOrderAccount
@@ -20,17 +20,20 @@ export default async function addDraftOrderAccount(parentResult, { input }, cont
         accountId: opaqueAccountId,
         cartId: opaqueCartId,
         cartToken,
-        shopId: opaqueShopId
+        shopId: opaqueShopId,
+        draftOrderId: opaqueDraftOrderId
     } = input;
     const accountId = decodeAccountOpaqueId(opaqueAccountId);
     const cartId = decodeCartOpaqueId(opaqueCartId);
     const shopId = decodeShopOpaqueId(opaqueShopId);
+    const draftOrderId = decodeDraftOrderOpaqueId(opaqueDraftOrderId);
 
     const draftOrder = await context.mutations.addDraftOrderAccount(context, {
         accountId,
         cartId,
         cartToken,
-        shopId
+        shopId,
+        draftOrderId
     });
 
     return { draftOrder, clientMutationId };

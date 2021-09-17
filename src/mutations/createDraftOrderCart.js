@@ -1,3 +1,4 @@
+import ReactionError from "@reactioncommerce/reaction-error";
 
 /**
  * @method createDraftOrderCart
@@ -11,7 +12,7 @@
 export default async function createDraftOrderCart(context, input) {
     const { collections } = context;
     const { DraftOrders } = collections;
-    const { createCartInput, accountId } = input;
+    const { createCartInput, accountId = null, draftOrderId } = input;
 
     const updatedContext = { ...context };
 
@@ -21,10 +22,17 @@ export default async function createDraftOrderCart(context, input) {
 
     const draftOrder = {
         cartId: cart._id,
-        cartToken: accountId && token || null
+        cartToken: token || null,
+        accountId
     };
 
-    const updatedOrder = await DraftOrders.insertOne(draftOrder);
+    const modifier = { $set: draftOrder };
+
+    const { value: updatedOrder } = await DraftOrders.findOneAndUpdate({
+        _id: draftOrderId
+    }, modifier, { returnOriginal: false });
+
+    if (!updatedOrder) throw new ReactionError("not-found", "draft order not found");
 
     return updatedOrder;
 }

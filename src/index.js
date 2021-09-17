@@ -2,6 +2,7 @@ import pkg from "../package.json";
 import mutations from "./mutations/index.js";
 import schemas from "./schemas/index.js";
 import resolvers from "./resolvers/index.js";
+import queries from "./queries/index.js";
 
 /**
  * @summary Import and call this function to add this plugin to your API.
@@ -19,6 +20,7 @@ export default async function register(app) {
       }
     },
     mutations,
+    queries,
     graphQL: {
       schemas,
       resolvers

@@ -16,11 +16,12 @@ import { decodeAccountOpaqueId, decodeCartOpaqueId, decodeShopOpaqueId } from ".
  */
 export default async function placeDraftOrder(parentResult, { input }, context) {
     const { clientMutationId = null,
+        shopId: opaqueShopId,
         draftOrder: {
-            shopId: opaqueShopId, cartId: opaqueCartId, cartToken, accountId: opaqueAccountId
+            cartId: opaqueCartId, cartToken, accountId: opaqueAccountId
         }
     } = input;
-    
+
     const shopId = decodeShopOpaqueId(opaqueShopId);
     const cartId = decodeCartOpaqueId(opaqueCartId);
     const accountId = decodeAccountOpaqueId(opaqueAccountId);

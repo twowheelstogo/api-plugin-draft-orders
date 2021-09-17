@@ -1,3 +1,4 @@
+import ReactionError from "@reactioncommerce/reaction-error";
 
 /**
  * @method addDraftOrderAccount
@@ -13,11 +14,12 @@
 export default async function addDraftOrderAccount(context, input) {
     const { collections } = context;
     const { DraftOrders } = collections;
-    const { accountId, cartId, cartToken, shopId } = input;
+    const { accountId, cartId, cartToken, shopId, draftOrderId } = input;
 
     const draftOrder = {
         accountId,
-        cartToken
+        cartToken,
+        cartId
     }
 
     const updatedContext = { ...context };
@@ -25,25 +27,27 @@ export default async function addDraftOrderAccount(context, input) {
     updatedContext.accountId = accountId;
 
     if (cartId) {
-        await context.mutations.reconcileCarts(updatedContext, {
+
+        const { data: updatedCart } = await context.mutations.reconcileCarts(updatedContext, {
             anonymousCartId: cartId,
             cartToken,
             shopId
         });
-
-        delete draftOrder.cartToken;
+        draftOrder.cartId = updatedCart._id;
     }
 
     const modifier = { $set: draftOrder };
 
     const { value: updatedDraftOrder } = await DraftOrders.findOneAndUpdate(
         {
-            _id: cartId
+            _id: draftOrderId
         },
         modifier,
         {
             returnOriginal: false
         });
+
+    if (!updatedDraftOrder) throw new ReactionError("not-found", "draft order not found");
 
     return updatedDraftOrder;
 }
