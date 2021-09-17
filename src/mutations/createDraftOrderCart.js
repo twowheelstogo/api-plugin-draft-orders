@@ -18,6 +18,8 @@ export default async function createDraftOrderCart(context, input) {
 
     updatedContext.accountId = accountId;
 
+    console.log(input.accountId, accountId);
+
     const { cart, token } = await context.mutations.createCart(updatedContext, createCartInput);
 
     const draftOrder = {
