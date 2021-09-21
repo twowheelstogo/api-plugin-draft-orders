@@ -92,6 +92,31 @@ type AddDraftOrderAccountPayload {
     draftOrder: DraftOrder
 }
 
+input AddDraftOrderCartItemsInput {
+    "The cart id"
+    cartId: ID!
+
+    "cart token if origin is anonymous"
+    cartToken: String
+
+    "the linked account id"
+    accountId: ID
+
+    "client mutation id to use as a reference"
+    clientMutationId: String
+
+    "items to add into the cart"
+    items: [CartItemInput]!
+}
+
+type AddDraftOrderCartItemsPayload {
+    "draft order"
+    cart: Cart
+
+    "the client mutation id"
+    clientMutationId: String
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
@@ -107,11 +132,16 @@ extend type Mutation {
     addDraftOrderAccount(
         input: AddDraftOrderAccountInput!
     ): AddDraftOrderAccountPayload!
+
+    "Mutation to add more items to existent cart"
+    addDraftOrderCartItems(
+        input: AddDraftOrderCartItemsInput!
+    ): AddDraftOrderCartItemsPayload!
 }
 
 extend type Query {
     "Gets a single draft order"
     draftOrder (
-        draftOrderId: String!
-    ) : DraftOrder!
+        draftOrderId: ID!
+    ) : DraftOrder
 }
