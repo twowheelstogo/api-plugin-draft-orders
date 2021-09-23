@@ -9,14 +9,19 @@
  * @param {Array}  input.items - items to add into the cart
  */
 export default async function addDraftOrderCartItems(context, input) {
-    
+    const updatedContext = context;
     if(input.accountId) {
-        context.accountId = input.accountId;
+        updatedContext.accountId = input.accountId;
+        delete input.accountId;
     } else if(input.cartToken){
         context.accountId = null;
     }
 
-    const udpatedCart = await context.mutations.addCartItems(context, input);
+    if(!input.cartToken || input.cartToken == null) {
+        delete input.cartToken
+    }
+
+    const udpatedCart = await context.mutations.addCartItems(updatedContext, input);
 
     return udpatedCart;
 }

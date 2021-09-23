@@ -42,7 +42,7 @@ export default async function addDraftOrderAccount(context, input) {
         };
 
         if (cartToken) {
-            cartInput.anonymousCartToken = null;
+            cartInput.anonymousAccessToken = null;
         }
 
         const cartModifier = { $set: cartInput };
@@ -56,8 +56,6 @@ export default async function addDraftOrderAccount(context, input) {
         });
 
         if (!updatedCart) throw new ReactionError("not-found", `cart with ID ${cartId} not found`);
-
-        console.log("updatedCart", updatedCart);
 
         draftOrder.cartId = updatedCart._id;
     }

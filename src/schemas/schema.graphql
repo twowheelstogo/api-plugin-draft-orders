@@ -117,6 +117,123 @@ type AddDraftOrderCartItemsPayload {
     clientMutationId: String
 }
 
+input SetShippingAddressFromDraftOrderInput {
+  "The shipping address"
+  address: CustomAddressInput!
+
+  "If set, this will be saved as the Address._id. Otherwise an ID will be generated."
+  addressId: String
+
+  "The cart to set shipping address on"
+  cartId: ID!
+
+  "The token for the cart, required if it is an anonymous cart"
+  cartToken: String
+
+  "The account id"
+  accountId: ID
+
+  "An optional string identifying the mutation call, which will be returned in the response payload"
+  clientMutationId: String
+}
+
+type SetShippingAddressFromDraftOrderPayload {
+  "The updated Cart"
+  cart: Cart!
+
+  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  clientMutationId: String
+}
+
+input UpdateFulfillmentOptionsForGroupFromDraftOrderInput {
+  "The cart to update fulfillment options for"
+  cartId: ID!
+
+  "The token for the cart, required if it is an anonymous cart"
+  cartToken: String
+
+  "An optional string identifying the mutation call, which will be returned in the response payload"
+  clientMutationId: String
+
+  "The group to update fulfillment options for"
+  fulfillmentGroupId: ID!
+
+  "The account id"
+  accountId: ID!
+}
+
+type UpdateFulfillmentOptionsForGroupFromDraftOrderPayload {
+  "The updated Cart"
+  cart: Cart!
+
+  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  clientMutationId: String
+}
+
+input PlaceOrderFromDraftOrderInput {
+  "An optional string identifying the mutation call, which will be returned in the response payload"
+  clientMutationId: String
+
+  "The order to be placed, if payment is accepted"
+  order: OrderInput!
+
+  """
+  The information necessary to pay. Collect this information from the shopper during a checkout flow.
+  You need not provide any payment input if the total is zero.
+  The total of all payment input `amount` fields must add up to the order total. The first payment
+  method where the `amount` field is `null` will be charged the remainder due.
+  """
+  payments: [PaymentInput]
+  
+  "Json to billing"
+  billing: JSONObject
+
+  "Json to gift"
+  giftNote: JSONObject
+
+  "Account id"
+  accountId: ID
+
+  "Draft order id"
+  draftOrderId: ID!
+}
+
+type PlaceOrderFromDraftOrderPayload {
+  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  clientMutationId: String
+
+  "Orders that were created"
+  orders: [Order]!
+
+  "If you are not logged in, this will be a token that can be used for future requests"
+  token: String
+}
+
+input UpdateFulfillmentTypeForGroupFromDraftOrderInput {
+    "The cart id to update"
+    cartId: String!
+
+    "The cartToken"
+    cartToken: String
+
+    "The fulfillment group to update"
+    fulfillmentGroupId: String!
+
+    "Selected fulfillment type"
+    fulfillmentType: FulfillmentType!
+
+    "The account id"
+    accountId: ID
+}
+
+type UpdateFulfillmentTypeForGroupFromDraftOrderPayload {
+    "The updated cart"
+    cart: Cart!
+
+    "The cliend mutation id"
+    clientMutationId: String
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
@@ -128,7 +245,7 @@ extend type Mutation {
         input: CreateDraftOrderCartInput!
     ) : CreateDraftOrderCartPayload!
 
-    "Mutration to add account into the draft order"
+    "Mutation to add account into the draft order"
     addDraftOrderAccount(
         input: AddDraftOrderAccountInput!
     ): AddDraftOrderAccountPayload!
@@ -137,6 +254,27 @@ extend type Mutation {
     addDraftOrderCartItems(
         input: AddDraftOrderCartItemsInput!
     ): AddDraftOrderCartItemsPayload!
+
+    "Set the sipping address for all fulfillment groups from draft orders"
+    setShippingAddressFromDraftOrder(
+        input: SetShippingAddressFromDraftOrderInput!
+    ): SetShippingAddressFromDraftOrderPayload!
+
+    "udpates all fulfillment options"
+    updateFulfillmentOptionsForGroupFromDraftOrder(
+        input: UpdateFulfillmentOptionsForGroupFromDraftOrderInput!
+    ): UpdateFulfillmentOptionsForGroupFromDraftOrderPayload!
+    """
+    Use this mutation to place an order from draft order, providing information necessary to pay for it.
+    The order will be placed only if authorization is successful for all submitted payments.
+    """
+    placeOrderFromDraftOrder(
+        input: PlaceOrderFromDraftOrderInput!
+    ): PlaceOrderFromDraftOrderPayload!
+    "Updates a fulfillment type for a single fulfillment group in cart"
+    updateFulfillmentTypeForGroupFromDraftOrder(
+        input: UpdateFulfillmentTypeForGroupFromDraftOrderInput!
+    ): UpdateFulfillmentTypeForGroupFromDraftOrderPayload!
 }
 
 extend type Query {
