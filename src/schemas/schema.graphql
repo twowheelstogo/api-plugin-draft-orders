@@ -15,6 +15,9 @@ type DraftOrder {
     "accountId"
     accountId: ID
 
+    "linked account"
+    account: Account
+
     "shop id for the draft order"
     shopId: ID!
 }

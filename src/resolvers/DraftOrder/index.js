@@ -1,3 +1,4 @@
+import getAccount from "../../utils/getAccount.js";
 import { encondeDraftOrderOpaqueId, encodeCartOpaqueId, encodeShopOpaqueId, encodeAccountOpaqueId } from "../../xforms/id.js";
 
 export default {
@@ -6,5 +7,6 @@ export default {
     createdAt: (node) => node.createdAt,
     cartToken: (node) => node.cartToken,
     accountId: (node) => encodeAccountOpaqueId(node.accountId),
-    shopId: (node) => encodeShopOpaqueId(node.shopId)
+    shopId: (node) => encodeShopOpaqueId(node.shopId),
+    account: (node, __, ctx) => getAccount(ctx, node.accountId)
 }
