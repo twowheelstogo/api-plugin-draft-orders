@@ -6,6 +6,7 @@ import setShippingAddressFromDraftOrder from "./setShippingAddressFromDraftOrder
 import updateFulfillmentOptionsForGroupFromDraftOrder from "./updateFulfillmentOptionsForGroupFromDraftOrder.js";
 import placeOrderFromDraftOrder from "./placeOrderFromDraftOrder.js";
 import updateFulfillmentTypeForGroupFromDraftOrder from "./updateFulfillmentTypeForGroupFromDraftOrder.js";
+import selectFulfillmentOptionForGroupFromDraftOrder from "./selectFulfillmentOptionForGroupFromDraftOrder.js";
 
 export default {
     placeDraftOrder,
@@ -15,5 +16,6 @@ export default {
     setShippingAddressFromDraftOrder,
     updateFulfillmentOptionsForGroupFromDraftOrder,
     placeOrderFromDraftOrder,
-    updateFulfillmentTypeForGroupFromDraftOrder
+    updateFulfillmentTypeForGroupFromDraftOrder,
+    selectFulfillmentOptionForGroupFromDraftOrder
 }
