@@ -265,6 +265,31 @@ type SelectFulfillmentOptionForGroupFromDraftOrderPayload {
   clientMutationId: String
 }
 
+input UpdateCartItemsQuantityFromDraftOrdersInput {
+  "The cart ID"
+  cartId: ID!
+
+  "If this cart is anonymous, provide the `cartToken` that was returned in the `CreateCartPayload`"
+  cartToken: String
+
+  "An optional string identifying the mutation call, which will be returned in the response payload"
+  clientMutationId: String
+
+  "Array of cart item quantities to update."
+  items: [UpdateCartItemInput]!
+
+  "Account id"
+  accountId: ID!
+}
+
+type UpdateCartItemsQuantityFromDraftOrdersPayload {
+  "The modified cart"
+  cart: Cart!
+
+  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  clientMutationId: String
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
@@ -310,6 +335,10 @@ extend type Mutation {
     selectFulfillmentOptionForGroupFromDraftOrder(
         input: SelectFulfillmentOptionForGroupFromDraftOrderInput!
     ): SelectFulfillmentOptionForGroupFromDraftOrderPayload!
+
+    updateCartItemsQuantityFromDraftOrders(
+        input: UpdateCartItemsQuantityFromDraftOrdersInput!
+    ): UpdateCartItemsQuantityFromDraftOrdersPayload!
 }
 
 extend type Query {

@@ -7,6 +7,7 @@ import updateFulfillmentOptionsForGroupFromDraftOrder from "./updateFulfillmentO
 import placeOrderFromDraftOrder from "./placeOrderFromDraftOrder.js";
 import updateFulfillmentTypeForGroupFromDraftOrder from "./updateFulfillmentTypeForGroupFromDraftOrder.js";
 import selectFulfillmentOptionForGroupFromDraftOrder from "./selectFulfillmentOptionForGroupFromDraftOrder.js";
+import updateCartItemsQuantityFromDraftOrders from "./updateCartItemsQuantityFromDraftOrders.js";
 
 export default {
     placeDraftOrder,
@@ -17,5 +18,6 @@ export default {
     updateFulfillmentOptionsForGroupFromDraftOrder,
     placeOrderFromDraftOrder,
     updateFulfillmentTypeForGroupFromDraftOrder,
-    selectFulfillmentOptionForGroupFromDraftOrder
+    selectFulfillmentOptionForGroupFromDraftOrder,
+    updateCartItemsQuantityFromDraftOrders
 }
