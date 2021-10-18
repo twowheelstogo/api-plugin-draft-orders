@@ -173,6 +173,21 @@ type UpdateFulfillmentOptionsForGroupFromDraftOrderPayload {
   clientMutationId: String
 }
 
+input OrderNoteInput {
+    "The account id"
+    userId: ID
+
+    "content"
+    content: String!
+
+    "created timestamp"
+    createdAt: DateTime!
+
+    "updated timestamp"
+    updatedAt: DateTime!
+}
+
+
 input PlaceOrderFromDraftOrderInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
@@ -199,6 +214,11 @@ input PlaceOrderFromDraftOrderInput {
 
   "Draft order id"
   draftOrderId: ID!
+}
+
+extend input OrderInput {
+    "notes"
+    notes: [OrderNoteInput]
 }
 
 type PlaceOrderFromDraftOrderPayload {
