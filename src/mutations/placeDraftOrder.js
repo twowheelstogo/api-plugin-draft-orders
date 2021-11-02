@@ -1,4 +1,5 @@
 import Random from "@reactioncommerce/random";
+import getOrderIdSequence from "../utils/getOrderIdSequence.js";
 
 /**
  * @method placeDraftOrder
@@ -21,11 +22,15 @@ export default async function placeDraftOrder(context, input) {
 
     const date = new Date();
 
+    const referenceId = await getOrderIdSequence(context);
+
     const draftOrderInput = {
         ...draftOrder,
+        referenceId,
         _id: Random.id(),
         shopId,
-        createdAt: date
+        createdAt: date,
+        status: "created"
     };
 
     await DraftOrders.insertOne(draftOrderInput);

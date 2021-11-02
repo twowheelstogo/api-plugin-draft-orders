@@ -1,7 +1,39 @@
+"Draft Order status"
+enum DraftOrderStatus {
+    "Created order"
+    created
+
+    "Processed order"
+    processing
+
+    "pending"
+    pending
+
+    "Scheduled order"
+    scheduled
+
+    "Abandoned order"
+    abandoned
+
+    "Completed order"
+    completed
+
+    "Canceled order"
+    canceled
+}
+
 "Draft order parameters"
-type DraftOrder {
+type DraftOrder implements Node {
     "The draft order ID"
     _id: ID!
+
+    "The related order id"
+    orderId: ID
+
+    order: Order
+
+    "Reference id"
+    referenceId: Int
 
     "The linked cart ID"
     cartId: String
@@ -20,6 +52,18 @@ type DraftOrder {
 
     "shop id for the draft order"
     shopId: ID!
+
+    "The status of the order"
+    status: DraftOrderStatus!
+
+    "Billing"
+    billing: JSONObject
+
+    "Gift details"
+    giftNote: JSONObject
+
+    "Customer notes"
+    notes: JSONObject
 }
 
 "input for draft orders"
@@ -35,6 +79,9 @@ input DraftOrderInput {
 
     "accountId"
     accountId: ID
+
+    "the order status"
+    status: DraftOrderStatus
 }
 
 "input for draft order cart"
@@ -226,7 +273,7 @@ type PlaceOrderFromDraftOrderPayload {
   clientMutationId: String
 
   "Orders that were created"
-  orders: [Order]!
+  orders: [Order]
 
   "If you are not logged in, this will be a token that can be used for future requests"
   token: String
@@ -361,9 +408,64 @@ extend type Mutation {
     ): UpdateCartItemsQuantityFromDraftOrdersPayload!
 }
 
+type DraftOrderConnection {
+  "The list of nodes that match the query, wrapped in an edge to provide a cursor string for each"
+  edges: [DraftOrderEdge]
+
+  """
+  You can request the `nodes` directly to avoid the extra wrapping that `NodeEdge` has,
+  if you know you will not need to paginate the results.
+  """
+  nodes: [DraftOrder]
+
+  "Information to help a client request the next or previous page"
+  pageInfo: PageInfo!
+
+  "The total number of nodes that match your query"
+  totalCount: Int!
+}
+
+"A connection edge in which each node is a `Order` object"
+type DraftOrderEdge implements NodeEdge {
+  "The cursor that represents this node in the paginated results"
+  cursor: ConnectionCursor!
+
+  "The draft order"
+  node: DraftOrder
+}
+
 extend type Query {
     "Gets a single draft order"
     draftOrder (
         draftOrderId: ID!
     ) : DraftOrder
+    "Get all draft orders for a single account, optionally limited to certain shop IDs and certain orderStatus"
+    draftOrders(
+        "Filters to apply to a list of orders"
+        filters: OrderFilterInput
+
+        "Provide a list of shop IDs from which you want to get orders from"
+        shopIds: [ID],
+
+        "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
+        after: ConnectionCursor,
+
+        "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
+        before: ConnectionCursor,
+
+        "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
+        first: ConnectionLimitInt,
+
+        "Return at most this many results. This parameter may be used with the `before` parameter."
+        last: ConnectionLimitInt,
+
+        "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
+        offset: Int,
+
+        "Return results sorted in this order"
+        sortOrder: SortOrder = desc,
+
+        "By default, orders are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
+        sortBy: OrdersSortByField = createdAt
+  ): DraftOrderConnection!
 }

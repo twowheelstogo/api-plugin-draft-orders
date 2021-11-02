@@ -1,0 +1,16 @@
+[
+  {
+    "i18n": "en",
+    "ns": "reaction-draft-orders",
+    "translation": {
+      "reaction-draft-orders": {
+        "admin": {
+          "dashboard": {
+            "ordersLabel": "Draft Orders",
+            "ordersTitle": "Draft Orders"
+          }
+        }
+      }
+    }
+  }
+]

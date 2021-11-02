@@ -56,7 +56,7 @@ export default async function placeOrderFromDraftOrder(parentResult, { input }, 
         giftNote
     });
 
-    await DraftOrders.deleteOne({ _id: draftOrderId });
+    // await DraftOrders.deleteOne({ _id: draftOrderId });
 
     return {
         clientMutationId,
