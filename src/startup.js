@@ -7,7 +7,7 @@ import cron from "node-cron";
  * @returns {undefined} 
  */
 export default async function scheduledOrdersStartup(context) {
-    cron.schedule("* * * * *", () => {
-        console.log("scheduled task every minute");
-    })
+    // cron.schedule("* * * * *", () => {
+    //     console.log("scheduled task every minute");
+    // })
 }

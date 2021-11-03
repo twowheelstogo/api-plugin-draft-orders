@@ -395,6 +395,14 @@ type UpdateDraftOrderPayload {
     draftOrder: DraftOrder
 }
 
+input DeleteDraftOrderInput {
+    draftOrderId: ID!
+}
+
+type DeleteDraftOrderPayload {
+    draftOrder: DraftOrder
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
@@ -448,6 +456,10 @@ extend type Mutation {
     updateDraftOrder(
         input: UpdateDraftOrderInput!
     ): UpdateDraftOrderPayload!
+    "Deletes a draft order - if a cart is related, it's deleted too"
+    deleteDraftOrder(
+        input: DeleteDraftOrderInput!
+    ): DeleteDraftOrderPayload!
 }
 
 type DraftOrderConnection {
