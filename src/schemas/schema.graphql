@@ -22,6 +22,22 @@ enum DraftOrderStatus {
     canceled
 }
 
+extend input BillingDetailsInput {
+    name: String
+
+    isCf: Boolean
+
+    partnerId: Int
+}
+
+extend type BillingDetails {
+    name: String
+
+    isCf: Boolean
+
+    partnerId: Int
+}
+
 "Draft order parameters"
 type DraftOrder implements Node {
     "The draft order ID"
@@ -30,6 +46,7 @@ type DraftOrder implements Node {
     "The related order id"
     orderId: ID
 
+    "The related order"
     order: Order
 
     "Reference id"
@@ -40,6 +57,9 @@ type DraftOrder implements Node {
 
     "The date and time at which draft order was created"
     createdAt: DateTime!
+
+    "The date and time at which draft order was udpated"
+    updatedAt: DateTime!
 
     "anonymousCartToken"
     cartToken: ID
@@ -57,13 +77,13 @@ type DraftOrder implements Node {
     status: DraftOrderStatus!
 
     "Billing"
-    billing: JSONObject
+    billing: BillingDetails
 
     "Gift details"
-    giftNote: JSONObject
+    giftNote: GiftNote
 
     "Customer notes"
-    notes: JSONObject
+    notes: [JSONObject]
 }
 
 "input for draft orders"
@@ -357,6 +377,24 @@ type UpdateCartItemsQuantityFromDraftOrdersPayload {
   clientMutationId: String
 }
 
+input UpdateDraftOrderInput {
+    billing: BillingDetailsInput
+
+    giftNote: GiftNoteInput
+
+    shopId: ID!
+
+    draftOrderId: ID!
+
+    deliveryDate: DateTime
+
+    notes: [JSONObject]
+}
+
+type UpdateDraftOrderPayload {
+    draftOrder: DraftOrder
+}
+
 extend type Mutation {
     "Mutation to place draft order"
     placeDraftOrder(
@@ -406,6 +444,10 @@ extend type Mutation {
     updateCartItemsQuantityFromDraftOrders(
         input: UpdateCartItemsQuantityFromDraftOrdersInput!
     ): UpdateCartItemsQuantityFromDraftOrdersPayload!
+    "Updates a draft order - saves billing, gift notes and customer notes"
+    updateDraftOrder(
+        input: UpdateDraftOrderInput!
+    ): UpdateDraftOrderPayload!
 }
 
 type DraftOrderConnection {

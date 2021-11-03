@@ -30,7 +30,12 @@ export default async function placeDraftOrder(context, input) {
         _id: Random.id(),
         shopId,
         createdAt: date,
-        status: "created"
+        status: "created",
+        orderId: null,
+        billing: null,
+        giftNote: null,
+        notes: null,
+        deliveryDate: null
     };
 
     await DraftOrders.insertOne(draftOrderInput);

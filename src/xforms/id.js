@@ -10,7 +10,8 @@ const namespaces = {
   FulfillmentMethod: "reaction/fulfillmentMethod",
   Product: "reaction/product",
   Shop: "reaction/shop",
-  DraftOrder: "reaction/draftOrder"
+  DraftOrder: "reaction/draftOrder",
+  Order: "reaction/order"
 };
 
 export const encodeAccountOpaqueId = encodeOpaqueId(namespaces.Account);
@@ -20,6 +21,7 @@ export const encodeCartOpaqueId = encodeOpaqueId(namespaces.Cart);
 export const encodeFulfillmentGroupOpaqueId = encodeOpaqueId(namespaces.FulfillmentGroup);
 export const encodeShopOpaqueId = encodeOpaqueId(namespaces.Shop);
 export const encondeDraftOrderOpaqueId = encodeOpaqueId(namespaces.DraftOrder);
+export const encodeOrderOpaqueId = encodeOpaqueId(namespaces.Order);
 
 export const decodeAccountOpaqueId = decodeOpaqueIdForNamespace(namespaces.Account);
 export const decodeAddressOpaqueId = decodeOpaqueIdForNamespace(namespaces.Address);
@@ -30,6 +32,7 @@ export const decodeFulfillmentMethodOpaqueId = decodeOpaqueIdForNamespace(namesp
 export const decodeProductOpaqueId = decodeOpaqueIdForNamespace(namespaces.Product);
 export const decodeShopOpaqueId = decodeOpaqueIdForNamespace(namespaces.Shop);
 export const decodeDraftOrderOpaqueId = decodeOpaqueIdForNamespace(namespaces.DraftOrder);
+export const decodeOrderOpaqueId = decodeOpaqueIdForNamespace(namespaces.Order);
 
 /**
  * @param {Object[]} items Array of OrderItemInput

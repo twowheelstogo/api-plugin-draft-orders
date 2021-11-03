@@ -14,7 +14,8 @@ export default async function getOrderIdSequence(context) {
     }, {
         $inc: { seq_value: 1 }
     }, {
-        returnOriginal: false
+        returnOriginal: false,
+        upsert: true
     });
 
     if (!updatedCounter) throw new ReactionError("server-error", "Error inesperado al crear contador");

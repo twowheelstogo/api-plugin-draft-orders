@@ -23,8 +23,8 @@ import {
  * @returns {Promise<Object>} PlaceOrderFromDraftOrderPayload
  */
 export default async function placeOrderFromDraftOrder(parentResult, { input }, context) {
-    const { clientMutationId = null, order, payments, billing, giftNote, accountId: opaqueAccountId } = input;
-    const { cartId: opaqueCartId, fulfillmentGroups, shopId: opaqueShopId, draftOrderId: opaqueDraftOrderId } = order;
+    const { clientMutationId = null, order, payments, billing, giftNote, accountId: opaqueAccountId, draftOrderId: opaqueDraftOrderId } = input;
+    const { cartId: opaqueCartId, fulfillmentGroups, shopId: opaqueShopId } = order;
     const { collections } = context;
     const { DraftOrders } = collections;
 
@@ -56,7 +56,15 @@ export default async function placeOrderFromDraftOrder(parentResult, { input }, 
         giftNote
     });
 
-    // await DraftOrders.deleteOne({ _id: draftOrderId });
+    if (orders && Array.isArray(orders)) {
+        const selector = { $set: { orderId: orders[0]?._id, status: "processing" } };
+
+        console.log("updating draft order...", draftOrderId);
+
+        const result = await DraftOrders.findOneAndUpdate({ _id: draftOrderId }, selector, { returnOriginal: false });
+
+        console.log(result);
+    }
 
     return {
         clientMutationId,

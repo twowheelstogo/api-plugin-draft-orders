@@ -8,6 +8,13 @@
           "dashboard": {
             "ordersLabel": "Draft Orders",
             "ordersTitle": "Draft Orders"
+          },
+          "table": {
+            "orderStatus": {
+              "created": "Created",
+              "pending": "Pending",
+              "processing": "Processing"
+            }
           }
         }
       }

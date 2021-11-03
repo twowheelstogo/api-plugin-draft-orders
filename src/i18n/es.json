@@ -8,6 +8,13 @@
           "dashboard": {
             "draftordersLabel": "Ordenes Preliminares",
             "draftordersTitle": "Ordenes Preliminares"
+          },
+          "table": {
+            "orderStatus": {
+              "created": "Creado",
+              "pending": "Pendiente",
+              "processing": "Procesando"
+            }
           }
         }
       }
