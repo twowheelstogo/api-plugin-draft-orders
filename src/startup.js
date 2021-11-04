@@ -1,5 +1,3 @@
-import cron from "node-cron";
-
 /**
  * @summary called on startup
  * @param {Object} context Startup context
@@ -7,7 +5,5 @@ import cron from "node-cron";
  * @returns {undefined} 
  */
 export default async function scheduledOrdersStartup(context) {
-    // cron.schedule("* * * * *", () => {
-    //     console.log("scheduled task every minute");
-    // })
+   
 }

@@ -84,6 +84,9 @@ type DraftOrder implements Node {
 
     "Customer notes"
     notes: [JSONObject]
+
+    "The scheduled delivery date"
+    deliveryDate: DateTime
 }
 
 "input for draft orders"
@@ -286,6 +289,9 @@ input PlaceOrderFromDraftOrderInput {
 extend input OrderInput {
     "notes"
     notes: [OrderNoteInput]
+
+    "delivery date"
+    deliveryDate: DateTime
 }
 
 type PlaceOrderFromDraftOrderPayload {
@@ -297,6 +303,11 @@ type PlaceOrderFromDraftOrderPayload {
 
   "If you are not logged in, this will be a token that can be used for future requests"
   token: String
+}
+
+extend enum OrderStatus {
+    "scheduled by deliveryDate"
+    scheduled
 }
 
 input UpdateFulfillmentTypeForGroupFromDraftOrderInput {
@@ -401,6 +412,10 @@ input DeleteDraftOrderInput {
 
 type DeleteDraftOrderPayload {
     draftOrder: DraftOrder
+}
+
+extend type Order {
+    deliveryDate: DateTime
 }
 
 extend type Mutation {
