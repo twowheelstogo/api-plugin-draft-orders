@@ -13,7 +13,8 @@
             "orderStatus": {
               "created": "Creado",
               "pending": "Pendiente",
-              "processing": "Procesando"
+              "processing": "Procesando",
+              "scheduled": "Agendado"
             }
           }
         }
