@@ -10,6 +10,7 @@ import selectFulfillmentOptionForGroupFromDraftOrder from "./selectFulfillmentOp
 import updateCartItemsQuantityFromDraftOrders from "./updateCartItemsQuantityFromDraftOrders.js";
 import updateDraftOrder from "./updateDraftOrder.js";
 import deleteDraftOrder from "./deleteDraftOrder.js";
+import removeCartItemsFromDraftOrder from "./removeCartItemsFromDraftOrder.js";
 
 export default {
     placeDraftOrder,
@@ -23,5 +24,6 @@ export default {
     selectFulfillmentOptionForGroupFromDraftOrder,
     updateCartItemsQuantityFromDraftOrders,
     updateDraftOrder,
-    deleteDraftOrder
+    deleteDraftOrder,
+    removeCartItemsFromDraftOrder
 }
