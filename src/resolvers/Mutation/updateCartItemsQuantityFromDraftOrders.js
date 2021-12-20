@@ -24,7 +24,9 @@ export default async function updateCartItemsQuantityFromDraftOrders(parentResul
     const items = itemsInput.map((item) => ({ cartItemId: decodeCartItemOpaqueId(item.cartItemId), quantity: item.quantity }));
     const updatedContext = context;
 
-    Object.assign(updatedContext, { accountId, userId: accountId });
+    if (accountId) {
+        Object.assign(updatedContext, { accountId, userId: accountId });
+    }
 
     const { cart } = await context.mutations.updateCartItemsQuantity(updatedContext, {
         cartId,

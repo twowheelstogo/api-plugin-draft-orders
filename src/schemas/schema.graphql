@@ -377,7 +377,7 @@ input UpdateCartItemsQuantityFromDraftOrdersInput {
   items: [UpdateCartItemInput]!
 
   "Account id"
-  accountId: ID!
+  accountId: ID
 }
 
 type UpdateCartItemsQuantityFromDraftOrdersPayload {
@@ -416,6 +416,31 @@ type DeleteDraftOrderPayload {
 
 extend type Order {
     deliveryDate: DateTime
+}
+
+input RemoveCartItemsFromDraftOrderInput {
+    "The cart id"
+    cartId: ID!
+
+    "Array of items to remove from the cart"
+    cartItemIds: [ID]!
+
+    "If this cart is anonymous, provide the `cartToken` that was returned in the `CreateCartPayload`"
+    cartToken: String
+    
+    "If the cart has already an account assigned, provide the `accountId`"
+    accountId: ID
+
+    "An optional string identifying the mutation call, which will be returned in the response payload"
+    clientMutationId: String
+}
+
+type RemoveCartItemsFromDraftOrderPayload {
+    "The modified cart"
+    cart: Cart!
+
+    "The same string you sent with the mutation params, for matching mutation calls with their responses"
+    clientMutationId: String
 }
 
 extend type Mutation {
@@ -475,6 +500,11 @@ extend type Mutation {
     deleteDraftOrder(
         input: DeleteDraftOrderInput!
     ): DeleteDraftOrderPayload!
+
+    "Remove items(s) from a cart using a super user"
+    removeCartItemsFromDraftOrder(
+        input: RemoveCartItemsFromDraftOrderInput!
+    ): RemoveCartItemsFromDraftOrderPayload!
 }
 
 type DraftOrderConnection {
