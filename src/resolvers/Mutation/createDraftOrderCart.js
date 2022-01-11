@@ -20,7 +20,7 @@ export default async function createDraftOrderCart(parentResult, { input }, cont
         draftOrderId: opaqueDraftOrderId,
         shopId: opaqueShopId
     } = input;
-    
+    console.log("input", input);
     const accountId = decodeAccountOpaqueId(opaqueAccountId);
     const draftOrderId = decodeDraftOrderOpaqueId(opaqueDraftOrderId);
     const items = decodeCartItemsOpaqueIds(itemsInput);

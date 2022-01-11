@@ -17,11 +17,11 @@ export default async function createDraftOrderCart(context, input) {
     const updatedContext = { ...context };
 
     updatedContext.accountId = accountId;
-
+    console.log("entraa")
     console.log(input.accountId, accountId);
-
+    console.log("createCartInput", createCartInput)
     const { cart, token } = await context.mutations.createCart(updatedContext, createCartInput);
-
+    console.log("cart", cart)
     const draftOrder = {
         cartId: cart._id,
         cartToken: token || null,
